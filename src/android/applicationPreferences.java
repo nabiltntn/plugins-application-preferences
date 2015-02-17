@@ -44,7 +44,8 @@ public class applicationPreferences extends CordovaPlugin {
             } else if (action.equals("set")) {
                 String key = args.getString(0);
                 String value = args.getString(1);
-                if (sharedPrefs.contains(key)) {
+                //we should avoid this condition because it doesnt allow adding new <key,value>  
+                //if (sharedPrefs.contains(key)) {
                     Editor editor = sharedPrefs.edit();
                     if ("true".equals(value.toLowerCase()) || "false".equals(value.toLowerCase())) {
                         editor.putBoolean(key, Boolean.parseBoolean(value));
@@ -54,10 +55,12 @@ public class applicationPreferences extends CordovaPlugin {
                     editor.commit();
                     callbackContext.success();
                     return true;
-                } else {
+            /*    
+            } else {
                 	callbackContext.error("No such property called " + key);
                 	return false;
                 }
+            */    
             } else if (action.equals("load")) {
                 JSONObject obj = new JSONObject();
                 Map<String,?> prefs = sharedPrefs.getAll();
